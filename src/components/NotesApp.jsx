@@ -1,7 +1,8 @@
 import React from "react";
 import { getInitialData, addNote } from "../utils";
+import AddNoteForm from "./AddNoteForm";
 import NotesList from "./NotesList";
-import NotesInput from "./NotesInput";
+import SearchBar from "./SearchBar";
 
 class NotesApp extends React.Component {
   constructor(props) {
@@ -44,55 +45,60 @@ class NotesApp extends React.Component {
 
   // Handler untuk menghapus catatan
   deleteNote = (id) => {
-    this.setState(
-      prevState({
-        notes: prevState.notes.filter((note) => note.id !== id),
-      })
-    );
+    this.setState((prevState) => ({
+      notes: prevState.notes.filter((note) => note.id !== id),
+    }));
   };
 
   // Handler untuk toggle arsip
   toggleArchive = (id) => {
-    this.setState(
-      prevState({
-        notes: prevState.notes.map((note) =>
-          note.id === id ? { ...note, archived: !note.archived } : note
-        ),
-      })
-    );
+    this.setState((prevState) => ({
+      notes: prevState.notes.map((note) =>
+        note.id === id ? { ...note, archived: !note.archived } : note
+      ),
+    }));
+  };
+
+  onKeywordChangeHandler = (keyword) => {
+    this.setState(() => {
+      return {
+        searchKeyword: keyword,
+      };
+    });
   };
 
   render() {
     return (
-      <div className="app">
-        <header className="header">
+      <div className="note-app">
+        <div className="note-app__header">
           <h1>📝 Catatan Pribadi</h1>
           <p>Kelola catatan Anda dengan mudah dan terorganisir</p>
-        </header>
-
-        <SearchBar
-          searchKeyword={this.state.searchKeyword}
-          onSearchChange={(searchKeyword) => this.setState({ searchKeyword })}
-        />
-
-        <AddNoteForm onAddNote={this.addNote} />
-
-        <NotesList
-          title="Catatan Aktif"
-          notes={this.activeNotes}
-          onDelete={this.deleteNote}
-          onToggleArchive={this.toggleArchive}
-          icon="fas fa-sticky-note"
-        />
-
-        <NotesList
-          title="Catatan Arsip"
-          notes={this.archivedNotes}
-          onDelete={this.deleteNote}
-          onToggleArchive={this.toggleArchive}
-          icon="fas fa-archive"
-          isArchived={true}
-        />
+        </div>
+        <div className="note-app__body">
+          <SearchBar
+            keyword={this.state.searchKeyword}
+            keywordChange={this.onKeywordChangeHandler}
+          />
+          <AddNoteForm onAddNote={this.onAddNoteHandler} />
+          <div className="notes-section">
+            <NotesList
+              title="Catatan Aktif"
+              notes={this.activeNotes}
+              onDelete={this.deleteNote}
+              onToggleArchive={this.toggleArchive}
+              isArchived={false}
+            />
+          </div>
+          <div className="notes-section">
+            <NotesList
+              title="Arsip"
+              notes={this.archivedNotes}
+              onDelete={this.deleteNote}
+              onToggleArchive={this.toggleArchive}
+              isArchived={true}
+            />
+          </div>
+        </div>
       </div>
     );
   }

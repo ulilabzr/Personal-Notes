@@ -1,69 +1,77 @@
 import React from "react";
 
-function AddNoteForm({ onAddNote }) {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const maxTitleLength = 50;
+class AddNoteForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: "",
+      body: "",
+      maxTitleLength: 50,
+    };
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (title.trim() && body.trim()) {
-      onAddNote({
-        id: +new Date(),
-        title: title.trim(),
-        body: body.trim(),
-        archived: false,
-        createdAt: new Date().toISOString(),
-      });
-      setTitle("");
-      setBody("");
+  handleTitleChange = (e) => {
+    if (e.target.value.length <= this.state.maxTitleLength) {
+      this.setState({ title: e.target.value });
     }
   };
 
-  const remainingChars = maxTitleLength - title.length;
+  handleBodyChange = (e) => {
+    this.setState({ body: e.target.value });
+  };
 
-  return (
-    <form onSubmit={handleSubmit} className="add-note-form">
-      <div className="form-group">
-        <label className="form-label">
-          Judul Catatan
-          <span
-            className={`char-limit ${remainingChars < 10 ? "warning" : ""}`}
-          >
-            ({remainingChars} karakter tersisa)
-          </span>
-        </label>
-        <input
-          type="text"
-          className="form-input"
-          placeholder="Masukkan judul catatan..."
-          value={title}
-          onChange={(e) => {
-            if (e.target.value.length <= maxTitleLength) {
-              setTitle(e.target.value);
-            }
-          }}
-        />
-      </div>
-      <div className="form-group">
-        <label className="form-label">Isi Catatan</label>
-        <textarea
-          className="form-input form-textarea"
-          placeholder="Tulis catatan Anda di sini..."
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
-      </div>
-      <button
-        type="submit"
-        className="btn"
-        disabled={!title.trim() || !body.trim()}
-      >
-        <i className="fas fa-plus"></i>
-        Tambah Catatan
-      </button>
-    </form>
-  );
+  handleSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.title.trim() && this.state.body.trim()) {
+      this.props.onAddNote({
+        title: this.state.title.trim(),
+        body: this.state.body.trim(),
+      });
+      this.setState({ title: "", body: "" });
+    }
+  };
+
+  render() {
+    const remainingChars = this.state.maxTitleLength - this.state.title.length;
+
+    return (
+      <form onSubmit={this.handleSubmit} className="add-note-form">
+        <div className="form-group">
+          <label className="form-label">
+            Judul Catatan
+            <span
+              className={`char-limit ${remainingChars < 10 ? "warning" : ""}`}
+            >
+              ({remainingChars} karakter tersisa)
+            </span>
+          </label>
+          <input
+            type="text"
+            className="form-input"
+            placeholder="Masukkan judul catatan..."
+            value={this.state.title}
+            onChange={this.handleTitleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label className="form-label">Isi Catatan</label>
+          <textarea
+            className="form-input form-textarea"
+            placeholder="Tulis catatan Anda di sini..."
+            value={this.state.body}
+            onChange={this.handleBodyChange}
+          />
+        </div>
+        <button
+          type="submit"
+          className="btn"
+          disabled={!this.state.title.trim() || !this.state.body.trim()}
+        >
+          Tambah Catatan
+        </button>
+      </form>
+    );
+  }
 }
 
 export default AddNoteForm;
