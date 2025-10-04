@@ -1,77 +1,71 @@
-import React from "react";
+import React, { useState } from "react";
 
-class AddNoteForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "",
-      body: "",
-      maxTitleLength: 50,
-    };
-  }
+function AddNoteForm({ onAddNote }) {
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const maxTitleLength = 50;
 
-  handleTitleChange = (e) => {
-    if (e.target.value.length <= this.state.maxTitleLength) {
-      this.setState({ title: e.target.value });
+  const handleTitleChange = (e) => {
+    if (e.target.value.length <= maxTitleLength) {
+      setTitle(e.target.value);
     }
   };
 
-  handleBodyChange = (e) => {
-    this.setState({ body: e.target.value });
+  const handleBodyChange = (e) => {
+    setBody(e.target.value);
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.title.trim() && this.state.body.trim()) {
-      this.props.onAddNote({
-        title: this.state.title.trim(),
-        body: this.state.body.trim(),
+    if (title.trim() && body.trim()) {
+      onAddNote({
+        title: title.trim(),
+        body: body.trim(),
       });
-      this.setState({ title: "", body: "" });
+      setTitle("");
+      setBody("");
     }
   };
 
-  render() {
-    const remainingChars = this.state.maxTitleLength - this.state.title.length;
+  const remainingChars = maxTitleLength - title.length;
 
-    return (
-      <form onSubmit={this.handleSubmit} className="add-note-form">
-        <div className="form-group">
-          <label className="form-label">
-            Judul Catatan
-            <span
-              className={`char-limit ${remainingChars < 10 ? "warning" : ""}`}
-            >
-              ({remainingChars} karakter tersisa)
-            </span>
-          </label>
-          <input
-            type="text"
-            className="form-input"
-            placeholder="Masukkan judul catatan..."
-            value={this.state.title}
-            onChange={this.handleTitleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label className="form-label">Isi Catatan</label>
-          <textarea
-            className="form-input form-textarea"
-            placeholder="Tulis catatan Anda di sini..."
-            value={this.state.body}
-            onChange={this.handleBodyChange}
-          />
-        </div>
-        <button
-          type="submit"
-          className="btn"
-          disabled={!this.state.title.trim() || !this.state.body.trim()}
-        >
-          Tambah Catatan
-        </button>
-      </form>
-    );
-  }
+  return (
+    <form onSubmit={handleSubmit} className="add-note-form">
+      <div className="form-group">
+        <label className="form-label">
+          Judul Catatan
+          <span
+            className={`char-limit ${remainingChars < 10 ? "warning" : ""}`}
+          >
+            ({remainingChars} karakter tersisa)
+          </span>
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          placeholder="Masukkan judul catatan..."
+          value={title}
+          onChange={handleTitleChange}
+        />
+      </div>
+      <div className="form-group">
+        <label className="form-label">Isi Catatan</label>
+        <textarea
+          className="form-input form-textarea"
+          placeholder="Tulis catatan Anda di sini..."
+          value={body}
+          onChange={handleBodyChange}
+        />
+      </div>
+      <button
+        type="submit"
+        className="btn"
+        disabled={!title.trim() || !body.trim()}
+      >
+        Tambah Catatan
+      </button>
+    </form>
+  );
 }
 
 export default AddNoteForm;

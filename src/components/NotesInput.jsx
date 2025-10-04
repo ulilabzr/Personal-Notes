@@ -1,58 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from 'prop-types';
 
-class NotesInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "",
-      body: "",
-    };
+function NotesInput({ addNote }) {
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
-    this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
-    this.onBodyChangeEventHandler = this.onBodyChangeEventHandler.bind(this);
-    this.onSubmitEventHandler = this.onSubmitEventHandler.bind(this);
-  }
+  const onTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
 
-  onTitleChangeEventHandler(event) {
-    this.setState(() => {
-      return {
-        title: event.target.value,
-      };
-    });
-  }
+  const onBodyChange = (event) => {
+    setBody(event.target.value);
+  };
 
-  onBodyChangeEventHandler(event) {
-    this.setState(() => {
-      return {
-        body: event.target.value,
-      };
-    });
-  }
-
-  onSubmitEventHandler(event) {
+  const onSubmit = (event) => {
     event.preventDefault();
-    this.props.addNote(this.state);
-  }
+    addNote({ title, body });
+    setTitle("");
+    setBody("");
+  };
 
-  render() {
-    return (
-      <form className="note-input" onSubmit={this.onSubmitEventHandler}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={this.state.title}
-          onChange={this.onTitleChangeEventHandler}
-        />
-        <textarea
-          type="text"
-          placeholder="Write your note here..."
-          value={this.state.body}
-          onChange={this.onBodyChangeEventHandler}
-        />
-        <button type="submit">Add Note</button>
-      </form>
-    );
-  }
+  return (
+    <form className="note-input" onSubmit={onSubmit}>
+      <input
+        type="text"
+        placeholder="Title"
+        value={title}
+        onChange={onTitleChange}
+      />
+      <textarea
+        type="text"
+        placeholder="Write your note here..."
+        value={body}
+        onChange={onBodyChange}
+      />
+      <button type="submit">Add Note</button>
+    </form>
+  );
 }
+
+NotesInput.propTypes = {
+  addNote: PropTypes.func.isRequired,
+};
 
 export default NotesInput;

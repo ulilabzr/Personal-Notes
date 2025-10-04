@@ -175,7 +175,7 @@ body {
 
 .notes-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
 
@@ -358,6 +358,12 @@ body {
 
 .note-item h3 {
   margin-bottom: 8px;
+}
+
+.notes-list__content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }
 
 .note-item__action {
