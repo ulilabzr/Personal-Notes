@@ -1,20 +1,25 @@
-import React from "react";
-import NotesInput from "../components/NotesInput";
+import React, { useContext } from "react";
+import AddNoteForm from "../components/AddNoteForm";
+import NotesContext from "../contexts/NotesContext";
 import { useNavigate } from "react-router-dom";
-import { addNote } from "../utils/local-data";
 
 function AddPage() {
-    const navigate = useNavigate();
+  const { onAddNote } = useContext(NotesContext);
+  const navigate = useNavigate();
 
-    function onAddNoteHandler(note){
-        addNote(note);
-        navigate('/');
-    }
+  const handleAddNote = (note) => {
+    onAddNote(note);
+    navigate("/");
+  };
 
-    return(
-        <div className="add-page">
-            <h2>Tambah Catatan</h2>
-            <NotesInput addNote={onAddNoteHandler} />
-        </div>
-    );
+  return (
+    <div className="note-app">
+      <div className="note-app__header">
+        <h1>Tambah Catatan Baru</h1>
+      </div>
+      <AddNoteForm onAddNote={handleAddNote} />
+    </div>
+  );
 }
+
+export default AddPage;

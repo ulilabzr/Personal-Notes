@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 function AddNoteForm({ onAddNote }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const maxTitleLength = 50;
+  const bodyRef = useRef(null);
 
   const handleTitleChange = (e) => {
     if (e.target.value.length <= maxTitleLength) {
@@ -11,8 +12,8 @@ function AddNoteForm({ onAddNote }) {
     }
   };
 
-  const handleBodyChange = (e) => {
-    setBody(e.target.value);
+  const handleBodyInput = (e) => {
+    setBody(e.target.innerHTML);
   };
 
   const handleSubmit = (e) => {
@@ -24,6 +25,7 @@ function AddNoteForm({ onAddNote }) {
       });
       setTitle("");
       setBody("");
+      if (bodyRef.current) bodyRef.current.innerHTML = "";
     }
   };
 
@@ -50,11 +52,20 @@ function AddNoteForm({ onAddNote }) {
       </div>
       <div className="form-group">
         <label className="form-label">Isi Catatan</label>
-        <textarea
+        <div
           className="form-input form-textarea"
           placeholder="Tulis catatan Anda di sini..."
-          value={body}
-          onChange={handleBodyChange}
+          contentEditable
+          ref={bodyRef}
+          onInput={handleBodyInput}
+          data-placeholder="Tulis catatan Anda di sini..."
+          style={{
+            minHeight: 120,
+            background: "#fff",
+            border: "1px solid #e9e9e7",
+            borderRadius: 6,
+            padding: 12,
+          }}
         />
       </div>
       <button

@@ -2,37 +2,21 @@ import React from "react";
 import NotesDetail from "../components/NotesDetail";
 import { useParams, useNavigate } from "react-router-dom";
 import { getNote, deleteNote } from "../utils/local-data";
-import NotFoundPage from "./NotFoundPage";
 
 
-function DetailPageWrapper() {
+function DetailPage() {
     const { id } = useParams();
-    const navigate = useNavigate();
-    return <DetailPage id={id} navigate={navigate} />;
-}
+    const {} = useNavigate();
 
-class DetailPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            note: getNote(this.props.id),
-        };
-        this.onDeleteHandler = this.onDeleteHandler.bind(this);
+    function onDeleteHandler(note) {
+        deleteNote(note);
+        navigate("/");
     }
-    onDeleteHandler() {
-        deleteNote(this.props.id);
-        this.props.navigate("/");
-    }
-    render() {
-        if (this.state.note !== undefined) {
-            return <NotFoundPage />;
-        }
-        return (
-            <div className="detail-page">
-                <NotesDetail note={this.state.note} onDelete={this.onDeleteHandler} />
-            </div>
-        );
-    }
-}
+    return(
+        <div className="detail-page">
+            <NotesDetail note={getNote(id)} onDelete={onDeleteHandler} />
+        </div>
+    );
+}   
 
-export default DetailPageWrapper;
+export default DetailPage;

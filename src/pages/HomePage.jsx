@@ -1,76 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import NotesList from "../components/NotesList";
+import NotesContext from "../contexts/NotesContext";
 import SearchBar from "../components/SearchBar";
-import { useSearchParams } from "react-router-dom";
-import { getInitialData, deleteNote, archiveNote, unarchiveNote } from "../utils/local-data";
 
-function HomePageWrapper() {
+function HomePage() {
+  const { notes, onDelete, onToggleArchive, searchKeyword, setSearchKeyword } = useContext(NotesContext);
+  const filteredNotes = notes.filter(note =>
+    !note.archived &&
+    note.title.toLowerCase().includes(searchKeyword.toLowerCase())
+  );
 
-    const [searchParams, setSearchParams] = useSearchParams();
-    const keyword = searchParams.get("keyword") || "";
-
-    function changeSearchParams(keyword) {
-        setSearchParams({ keyword });
-    }
-
-    return <HomePage defaultKeyword={keyword} keywordChange={changeSearchParams} />;
+  return (
+    <div className="note-app">
+      <div className="note-app__header">
+        <h1>Catatan Aktif</h1>
+      </div>
+      <SearchBar keyword={searchKeyword} keywordChange={setSearchKeyword} />
+      <NotesList
+        notes={filteredNotes}
+        onDelete={onDelete}
+        onToggleArchive={onToggleArchive}
+        isArchived={false}
+      />
+    </div>
+  );
 }
 
-
-class HomePage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            notes: getInitialData(),
-        };
-        this.onDeleteHandler = this.onDeleteHandler.bind(this);
-        this.onToggleArchiveHandler = this.onToggleArchiveHandler.bind(this);
-    } 
-
-    onDeleteHandler(id) {
-        this.setState((prevState) => {
-            return {
-                notes: deleteNote(id, prevState.notes),
-            };
-        });
-    }
-
-    onToggleArchiveHandler(id) {
-        this.setState((prevState) => {
-            const note = prevState.notes.find((note) => note.id === id);
-            if (note.archived) {
-                return{
-                    notes: unarchiveNote(id, prevState.notes),
-                };
-            } else {
-                return{
-                    notes: archiveNote(id, prevState.notes),
-                };
-            }
-        });
-    }
-
-    render(){
-        return(
-            <div className="home-page">
-                <NotesList
-                    title="Catatan Aktif"
-                    notes={this.state.notes.filter((notes)=> !notes.archived)}
-                    onDelete={this.onDeleteHandler}
-                    onToggleArchive={this.onToggleArchiveHandler}
-                    isArchived={false}
-                    />
-                <NotesList
-                    title="Arsip"
-                    notes={this.state.notes.filter((notes)=> notes.archived)}
-                    onDelete={this.onDeleteHandler}
-                    onToggleArchive={this.onToggleArchiveHandler}
-                    isArchived={true}
-                />
-            </div>
-        );
-    
-    }
-}
-
-export default HomePageWrapper;
+export default HomePage;

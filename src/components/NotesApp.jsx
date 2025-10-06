@@ -1,25 +1,25 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import HomePage from "../pages/HomePage";
 import AddPage from "../pages/AddPage";
-import ArsipPage from "../pages/ArchivePage";
-import DetailPage from "../pages/DetailPage";
+import ArchivePage from "../pages/ArchivePage";
+import DetailPage from "../components/NotesDetail";
 import Navigation from "./Navigation";
 import NotFoundWrapper from "../pages/NotFoundPage";
-import HomePageWrapper from "../pages/HomePage";
+import HomePage from "../pages/HomePage";
+import { NotesProvider } from "../contexts/NotesContext";
 
 function NotesApp() {
   return (
-    <div>
+    <NotesProvider>
       <Navigation />
       <Routes>
-        <Route path="/" element={<HomePageWrapper />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/add" element={<AddPage />} />
-        <Route path="/arsip" element={<ArsipPage />} />
-        <Route path="/detail" element={<DetailPage />} />
-        <Route path="*" element={<NotFoundWrapper />} />
+        <Route path="/arsip" element={<ArchivePage />} />
+        <Route path="/detail/:id" element={<DetailPage />} />
+        <Route path="/*" element={<NotFoundWrapper />} />
       </Routes>
-    </div>
+    </NotesProvider>
   );
 }
 

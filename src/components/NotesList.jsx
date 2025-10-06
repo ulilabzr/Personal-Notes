@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import parser from "html-react-parser";
 import PropTypes from 'prop-types';
 import { showFormattedDate } from "../utils";
 
@@ -17,7 +19,7 @@ function NotesList ({ title, notes, onDelete, onToggleArchive, isArchived }) {
                 <p className="note-item__date">
                   {showFormattedDate(note.createdAt)}
                 </p>
-                <p className="note-item__body">{note.body}</p>
+                <p className="note-item__body">{parser(note.body)}</p>
               </div>
               <div className="note-item__action">
                 <button
