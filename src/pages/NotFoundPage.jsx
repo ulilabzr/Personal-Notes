@@ -2,16 +2,14 @@ import React from "react";
 import NotesDetail from "../components/NotesDetail";
 import { useParams, useNavigate } from "react-router-dom";
 import { getNote, deleteNote } from "../utils/local-data";
-import NotFoundPage from "./NotFoundPage";
 
-
-function DetailPageWrapper() {
+function NotFoundWrapper() {
     const { id } = useParams();
     const navigate = useNavigate();
-    return <DetailPage id={id} navigate={navigate} />;
+    return <NotFoundPage id={id} navigate={navigate} />;
 }
 
-class DetailPage extends React.Component {
+class NotFoundPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,14 +23,20 @@ class DetailPage extends React.Component {
     }
     render() {
         if (this.state.note !== undefined) {
-            return <NotFoundPage />;
-        }
+            return (
+                <div className="detail-page">
+                    <NotesDetail note={this.state.note} onDelete={this.onDeleteHandler} />
+                </div>
+            );
+        }   
         return (
-            <div className="detail-page">
-                <NotesDetail note={this.state.note} onDelete={this.onDeleteHandler} />
+            <div className="not-found-page">
+                <h2>404 - Halaman Tidak Ditemukan</h2>
+                <p>Maaf, halaman yang Anda cari tidak ditemukan.</p>
+                <button onClick={() => this.props.navigate(-1)}>Kembali</button>
             </div>
         );
     }
 }
 
-export default DetailPageWrapper;
+export default NotFoundWrapper;
