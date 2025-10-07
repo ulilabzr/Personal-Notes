@@ -8,8 +8,7 @@ function NotesDetail() {
   const navigate = useNavigate();
   const { notes, onDelete, onToggleArchive } = useContext(NotesContext);
 
-const note = notes.find((n) => String(n.id) === id);
-
+  const note = notes.find((n) => String(n.id) === id);
 
   if (!note) {
     return <div className="empty-state">Catatan tidak ditemukan</div>;
@@ -22,7 +21,7 @@ const note = notes.find((n) => String(n.id) === id);
 
   const handleToggleArchive = () => {
     onToggleArchive(note.id);
-    navigate("/"); 
+    navigate("/");
   };
 
   return (
@@ -34,21 +33,22 @@ const note = notes.find((n) => String(n.id) === id);
         </div>
       </div>
 
-      <div
-        className="note-body"
-      >
-        {parser(note.body)}
-      </div>
+      <div className="note-body">{parser(note.body)}</div>
 
       <div className="note-actions" style={{ marginTop: 24 }}>
         <button className="btn btn-delete" onClick={handleDelete}>
-          Hapus
+          <i className="fa-solid fa-trash"></i> Hapus
         </button>
+
         <button
           className={`btn ${note.archived ? "btn-unarchive" : "btn-archive"}`}
           onClick={handleToggleArchive}
         >
-          {note.archived ? "Batal Arsip" : "Arsipkan"}
+          {note.archived ? ("Batal Arsip") : (
+            <>
+              <i className="fa-solid fa-box-archive"></i> Arsip
+            </>
+          )}
         </button>
       </div>
     </div>

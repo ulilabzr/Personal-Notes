@@ -25,22 +25,26 @@ function NotesList({ notes, onDelete, onToggleArchive, isArchived }) {
                   className="note-item__delete-button"
                   onClick={() => onDelete(note.id)}
                 >
-                  <i className="fa-solid fa-trash"></i>
+                  <i className="fa-solid fa-trash"></i> Hapus
                 </button>
 
                 <button
                   className="note-item__archive-button"
                   onClick={() => onToggleArchive(note.id)}
                 >
-                  {isArchived ? "Pindahkan" : <i className="fa-solid fa-box-archive"></i>}
+                  {isArchived ? (<> <i className="fa-solid fa-box-archive"></i>Pindahkan</>) : (
+            <>
+              <i className="fa-solid fa-box-archive"></i> Arsip
+            </>
+          )}
                 </button>
 
                 {/* 🟢 Tombol Detail */}
                 <button
                   className="note-item__detail-button"
                   onClick={() => navigate(`/detail/${note.id}`)}
-                >
-                  Detail
+                ><i className="fa-solid fa-circle-info"></i>
+                   Detail
                 </button>
               </div>
             </div>
