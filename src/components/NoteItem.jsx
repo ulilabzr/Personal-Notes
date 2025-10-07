@@ -1,7 +1,6 @@
 import React from "react";
 import { showFormattedDate } from "../utils";
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
 
 function NoteItem({ id, title, body, createdAt, onDelete }) {
   return (
@@ -15,9 +14,7 @@ function NoteItem({ id, title, body, createdAt, onDelete }) {
         <button className="btn btn-delete" onClick={() => onDelete(id)}>
           <i className="fa-solid fa-trash"></i>
         </button>
-        <Link to={`/notes/${id}`} className="btn btn-detail" style={{marginLeft: 8}}>
-          Lihat Detail
-        </Link>
+
       </div>
     </div>
   );

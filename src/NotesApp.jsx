@@ -11,7 +11,8 @@ import { NotesProvider } from "./contexts/NotesContext";
 function NotesApp() {
   return (
     <NotesProvider>
-      <Navigation />
+      <div>
+        <Navigation />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/add" element={<AddPage />} />
@@ -19,6 +20,7 @@ function NotesApp() {
         <Route path="/detail/:id" element={<DetailPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      </div>
     </NotesProvider>
   );
 }
