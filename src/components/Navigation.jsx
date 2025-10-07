@@ -12,7 +12,7 @@ function Navigation() {
         </li>
         <li>
           <NavLink to="/archive" className={({ isActive }) => (isActive ? "active" : "")}>
-            Archive
+            <i className="fa-solid fa-box-archive"></i> Arsip
           </NavLink>
         </li>
       </ul>

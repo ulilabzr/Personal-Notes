@@ -298,12 +298,25 @@ body {
   border-radius: 8px;
   padding: 16px;
   width: 100%;
-  min-height: 250px; /* biar tinggi seragam */
+  min-height: 250px;
   box-sizing: border-box;
 }
 
+.note-item__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+  white-space: nowrap;           
+  overflow: hidden;
+  text-overflow: ellipsis;}
+
 .note-item__content {
-  flex-grow: 1; /* isi fleksibel, dorong tombol ke bawah */
+  margin-bottom: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5; 
+  -webkit-box-orient: vertical;
 }
 
 .note-item__action {
@@ -459,13 +472,6 @@ body {
   margin-bottom: 16px;
 }
 
-.note-item {
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  padding: 16px;
-  margin-bottom: 16px;
-}
-
 .note-item h3 {
   margin-bottom: 8px;
 }
@@ -513,7 +519,6 @@ body {
   margin: 24px 0;
 }
 
-/* --- Home Page --- */
 .home-page {
   max-width: 1000px;
   margin: 0 auto;
@@ -527,7 +532,6 @@ body {
   text-align: center;
 }
 
-/* --- Add Page --- */
 .add-page {
   max-width: 600px;
   margin: 0 auto;
@@ -548,7 +552,6 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
-/* --- Archive Page --- */
 .archive-page {
   max-width: 1000px;
   margin: 0 auto;
@@ -562,7 +565,6 @@ body {
   text-align: center;
 }
 
-/* --- Detail Page --- */
 .detail-page {
   max-width: 700px;
   margin: 0 auto;
@@ -591,7 +593,6 @@ body {
   margin-top: 24px;
 }
 
-/* --- Not Found Page --- */
 .empty-state {
   min-height: 60vh;
   display: flex;
@@ -625,20 +626,18 @@ body {
   background: #1a73c2;
 }
 
-/* ===== TABLET (max-width: 1024px) ===== */
 @media (max-width: 1024px) {
   .notes-grid,
   .notes-list__content {
-    grid-template-columns: repeat(3, 1fr); /* 3 card per row di layar sedang */
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
 }
 
-/* ===== MOBILE LANDSCAPE / TABLET KECIL (max-width: 768px) ===== */
 @media (max-width: 768px) {
   .notes-grid,
   .notes-list__content {
-    grid-template-columns: repeat(2, 1fr); /* 2 card per row */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 12px;
   }
 
@@ -657,11 +656,10 @@ body {
   }
 }
 
-/* ===== HP KECIL (max-width: 480px) ===== */
 @media (max-width: 480px) {
   .notes-grid,
   .notes-list__content {
-    grid-template-columns: 1fr; /* 1 card per row */
+    grid-template-columns: 1fr; 
     gap: 12px;
   }
 
