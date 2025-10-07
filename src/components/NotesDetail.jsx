@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
+import parser from "html-react-parser";
 import { useParams, useNavigate } from "react-router-dom";
 import NotesContext from "../contexts/NotesContext";
-import parser from "html-react-parser";
 
 function NotesDetail() {
   const { id } = useParams();
@@ -24,7 +24,7 @@ function NotesDetail() {
       </div>
       <div className="note-actions" style={{ marginTop: 24 }}>
         <button className="btn btn-delete" onClick={() => { onDelete(note.id); navigate("/"); }}>
-          Hapus
+          <i className="fa-solid fa-trash"></i> Hapus
         </button>
         <button
           className={`btn ${note.archived ? "btn-unarchive" : "btn-archive"}`}

@@ -15,7 +15,7 @@ function NotesApp() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/add" element={<AddPage />} />
-        <Route path="/arsip" element={<ArchivePage />} />
+        <Route path="/archive" element={<ArchivePage />} />
         <Route path="/detail/:id" element={<DetailPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

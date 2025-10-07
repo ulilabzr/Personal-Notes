@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import NotesList from "../components/NotesList";
 import NotesContext from "../contexts/NotesContext";
 import SearchBar from "../components/SearchBar";
+import NewList from "../components/NewList";
 
 function HomePage() {
   const { notes, onDelete, onToggleArchive, searchKeyword, setSearchKeyword } = useContext(NotesContext);
@@ -13,9 +14,10 @@ function HomePage() {
   return (
     <div className="note-app">
       <div className="note-app__header">
-        <h1>Catatan Aktif</h1>
+        <h1>📝PERSONAL NOTES</h1>
       </div>
       <SearchBar keyword={searchKeyword} keywordChange={setSearchKeyword} />
+      <NewList />
       <NotesList
         notes={filteredNotes}
         onDelete={onDelete}

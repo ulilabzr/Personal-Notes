@@ -1,10 +1,10 @@
 import React, { createContext, useState } from "react";
-import { getInitialData } from "../utils";
+import { getAllNotes } from '../utils/local-data';
 
 const NotesContext = createContext();
 
 export function NotesProvider({ children }) {
-  const [notes, setNotes] = useState(getInitialData());
+  const [notes, setNotes] = useState(getAllNotes());
   const [searchKeyword, setSearchKeyword] = useState("");
 
   const onAddNote = ({ title, body }) => {

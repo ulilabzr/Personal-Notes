@@ -13,7 +13,8 @@ function AddNoteForm({ onAddNote }) {
   };
 
   const handleBodyInput = (e) => {
-    setBody(e.target.innerHTML);
+    const text = e.target.innerText.trim();
+    setBody(text ? e.target.innerHTML : "");
   };
 
   const handleSubmit = (e) => {
@@ -53,19 +54,12 @@ function AddNoteForm({ onAddNote }) {
       <div className="form-group">
         <label className="form-label">Isi Catatan</label>
         <div
-          className="form-input form-textarea"
+          className="form-textarea"
           placeholder="Tulis catatan Anda di sini..."
           contentEditable
           ref={bodyRef}
           onInput={handleBodyInput}
           data-placeholder="Tulis catatan Anda di sini..."
-          style={{
-            minHeight: 120,
-            background: "#fff",
-            border: "1px solid #e9e9e7",
-            borderRadius: 6,
-            padding: 12,
-          }}
         />
       </div>
       <button

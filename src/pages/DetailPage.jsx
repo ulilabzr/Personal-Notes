@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import NotesDetail from "../components/NotesDetail";
 import { useParams, useNavigate } from "react-router-dom";
 import { getNote, deleteNote } from "../utils/local-data";
 
-
 function DetailPage() {
     const { id } = useParams();
-    const {} = useNavigate();
+    const navigate = useNavigate();
+    const [note] = useState(getNote(id));
 
-    function onDeleteHandler(note) {
-        deleteNote(note);
+    const onDeleteHandler = () => {
+        deleteNote(id);
         navigate("/");
+    };
+
+    if (!note) {
+        return (
+            <div className="detail-page">
+                <div className="empty-state">
+                    <div className="empty-title">Catatan tidak ditemukan</div>
+                </div>
+            </div>
+        );
     }
-    return(
+
+    return (
         <div className="detail-page">
-            <NotesDetail note={getNote(id)} onDelete={onDeleteHandler} />
+            <NotesDetail note={note} onDelete={onDeleteHandler} />
         </div>
     );
-}   
+}
 
 export default DetailPage;

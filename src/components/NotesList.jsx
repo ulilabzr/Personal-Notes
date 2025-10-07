@@ -1,10 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import parser from "html-react-parser";
-import PropTypes from 'prop-types';
 import { showFormattedDate } from "../utils";
+import NotesContext from "../contexts/NotesContext";
 
-function NotesList ({ title, notes, onDelete, onToggleArchive, isArchived }) {
+function NotesList ({ title, isArchived,notes, onDelete, onToggleArchive }) {
+  
   return(
     <div className="notes-list">
       <h2>{title}</h2>
@@ -42,7 +42,5 @@ function NotesList ({ title, notes, onDelete, onToggleArchive, isArchived }) {
     </div>
   );
 }
-
-NotesList.propTypes = {};
 
 export default NotesList;
