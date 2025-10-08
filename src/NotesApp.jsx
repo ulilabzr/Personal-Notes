@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
 import AddPage from "./pages/AddPage";
 import ArchivePage from "./pages/ArchivePage";
 import DetailPage from "./components/NotesDetail";
@@ -14,11 +14,13 @@ function NotesApp() {
       <div>
         <Navigation />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/add" element={<AddPage />} />
-        <Route path="/archive" element={<ArchivePage />} />
-        <Route path="/detail/:id" element={<DetailPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path='/' element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path='archives' element={<ArchivePage />} />
+          <Route path='notes/:id' element={<DetailPage />} />
+          <Route path='new' element={<AddPage />} />
+          <Route path='*' element={<NotFoundPage />} />
+        </Route>
       </Routes>
       </div>
     </NotesProvider>

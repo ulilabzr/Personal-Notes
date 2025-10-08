@@ -2,14 +2,17 @@ import React from "react";
 import PropTypes, { func } from 'prop-types';
 
 function SearchBar({ keyword, keywordChange }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params =searchParams.get('q') || '';
+  
   return (
     <div className="search-bar">
       <input
-        type="text"
+        type="search"
         className="search-bar__input"
         placeholder="Cari catatan..."
         value={keyword}
-        onChange={(e) => keywordChange(e.target.value)}
+        onChange={(e) => setSearchParams({ q: e.target.value })}
       />
     </div>
   )
