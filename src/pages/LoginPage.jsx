@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import useInput from "../hooks/useInput";
 import AuthContext from "../contexts/AuthContext";
+import LanguageContext from "../contexts/LanguageContext";
 import { Link, useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
+  const { t } = useContext(LanguageContext);
   const [email, onEmailChange] = useInput("");
   const [password, onPasswordChange] = useInput("");
   const [loading, setLoading] = useState(false);
@@ -28,24 +30,24 @@ function LoginPage() {
   return (
     <div className="note-app">
       <div className="note-app__header">
-        <h1>Masuk</h1>
+        <h1>{t('login')}</h1>
       </div>
       <div className="add-form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
-            <label className="form-label" htmlFor="email">Email</label>
+            <label className="form-label" htmlFor="email">{t('email')}</label>
             <input className="form-input" id="email" type="email" value={email} onChange={onEmailChange} required />
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="password">Password</label>
+            <label className="form-label" htmlFor="password">{t('password')}</label>
             <input className="form-input" id="password" type="password" value={password} onChange={onPasswordChange} required />
           </div>
 
           {error && <div className="empty-title form-error">{error}</div>}
-          <button className="btn" type="submit" disabled={loading}>{loading ? 'Loading...' : 'Login'}</button>
+          <button className="btn" type="submit" disabled={loading}>{loading ? t('loading') : t('login')}</button>
         </form>
-        <p className="form-note">Belum punya akun? <Link to="/register">Daftar</Link></p>
+        <p className="form-note">{t('noAccount')}? <Link to="/register">{t('register')}</Link></p>
       </div>
     </div>
   );

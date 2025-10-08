@@ -2,16 +2,18 @@ import React, { useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import parser from "html-react-parser";
 import NotesContext from "../contexts/NotesContext";
+import LanguageContext from "../contexts/LanguageContext";
 
 function NotesDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { notes, onDelete, onToggleArchive } = useContext(NotesContext);
+  const { t } = useContext(LanguageContext);
 
   const note = notes.find((n) => String(n.id) === id);
 
   if (!note) {
-    return <div className="empty-state">Catatan tidak ditemukan</div>;
+    return <div className="empty-state">{t('notFoundNote')}</div>;
   }
 
   const handleDelete = () => {
@@ -37,16 +39,16 @@ function NotesDetail() {
 
       <div className="note-actions" style={{ marginTop: 24 }}>
         <button className="btn btn-delete" onClick={handleDelete}>
-          <i className="fa-solid fa-trash"></i> Hapus
+          <i className="fa-solid fa-trash"></i> {t('delete')}
         </button>
 
         <button
           className={`btn ${note.archived ? "btn-unarchive" : "btn-archive"}`}
           onClick={handleToggleArchive}
         >
-          {note.archived ? ("Batal Arsip") : (
+          {note.archived ? (t('unarchive')) : (
             <>
-              <i className="fa-solid fa-box-archive"></i> Arsip
+              <i className="fa-solid fa-box-archive"></i> {t('archive')}
             </>
           )}
         </button>

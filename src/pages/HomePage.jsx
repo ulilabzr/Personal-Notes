@@ -4,9 +4,11 @@ import NotesContext from "../contexts/NotesContext";
 import SearchBar from "../components/SearchBar";
 import NewList from "../components/NewList";
 import { useSearchParams } from "react-router-dom";
+import LanguageContext from "../contexts/LanguageContext";
 
 function HomePage() {
   const { notes, onDelete, onToggleArchive, setSearchKeyword } = useContext(NotesContext);
+  const { t } = useContext(LanguageContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = (searchParams.get('q') || '').toLowerCase();
 

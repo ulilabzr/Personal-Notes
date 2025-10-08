@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import useInput from "../hooks/useInput";
 import AuthContext from "../contexts/AuthContext";
+import LanguageContext from "../contexts/LanguageContext";
 import { Link, useNavigate } from "react-router-dom";
 
 function RegisterPage() {
   const navigate = useNavigate();
   const { register } = useContext(AuthContext);
+  const { t } = useContext(LanguageContext);
   const [name, onNameChange] = useInput("");
   const [email, onEmailChange] = useInput("");
   const [password, onPasswordChange] = useInput("");
@@ -34,34 +36,34 @@ function RegisterPage() {
   return (
     <div className="note-app">
       <div className="note-app__header">
-        <h1>Daftar</h1>
+        <h1>{t('register')}</h1>
       </div>
       <div className="add-form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
-            <label className="form-label" htmlFor="name">Nama</label>
+            <label className="form-label" htmlFor="name">{t('name')}</label>
             <input className="form-input" id="name" type="text" value={name} onChange={onNameChange} required />
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="email">Email</label>
+            <label className="form-label" htmlFor="email">{t('email')}</label>
             <input className="form-input" id="email" type="email" value={email} onChange={onEmailChange} required />
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="password">Password</label>
+            <label className="form-label" htmlFor="password">{t('password')}</label>
             <input className="form-input" id="password" type="password" value={password} onChange={onPasswordChange} required />
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="confirm">Konfirmasi Password</label>
+            <label className="form-label" htmlFor="confirm">{t('confirmPassword')}</label>
             <input className="form-input" id="confirm" type="password" value={confirm} onChange={onConfirmChange} />
           </div>
 
           {error && <div className="empty-title form-error">{error}</div>}
-          <button className="btn" type="submit" disabled={loading}>{loading ? 'Loading...' : 'Register'}</button>
+          <button className="btn" type="submit" disabled={loading}>{loading ? t('loading') : t('register')}</button>
         </form>
-        <p className="form-note">Sudah punya akun? <Link to="/login">Masuk</Link></p>
+        <p className="form-note">{t('alreadyAccount')}? <Link to="/login">{t('login')}</Link></p>
       </div>
     </div>
   );

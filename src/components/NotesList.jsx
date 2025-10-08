@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import parser from "html-react-parser";
 import { showFormattedDate } from "../utils";
 import { useNavigate } from "react-router-dom";
+import LanguageContext from "../contexts/LanguageContext";
 
 function NotesList({ notes, onDelete, onToggleArchive, isArchived }) {
   const navigate = useNavigate();
+  const { t } = useContext(LanguageContext);
 
   return (
     <div className="notes-list">
       {notes.length === 0 ? (
-        <p className="notes-list__empty">Tidak ada catatan</p>
+        <p className="notes-list__empty">{t('noNotes')}</p>
       ) : (
         <div className="notes-list__content">
           {notes.map((note) => (
@@ -25,16 +27,16 @@ function NotesList({ notes, onDelete, onToggleArchive, isArchived }) {
                   className="note-item__delete-button"
                   onClick={() => onDelete(note.id)}
                 >
-                  <i className="fa-solid fa-trash"></i> Hapus
+                  <i className="fa-solid fa-trash"></i> {t('delete') || 'Delete'}
                 </button>
 
                 <button
                   className="note-item__archive-button"
                   onClick={() => onToggleArchive(note.id)}
                 >
-                  {isArchived ? (<> <i className="fa-solid fa-box-archive"></i>Pindahkan</>) : (
+                  {isArchived ? (<> <i className="fa-solid fa-box-archive"></i>{t('unarchive') || 'Move'}</>) : (
             <>
-              <i className="fa-solid fa-box-archive"></i> Arsip
+              <i className="fa-solid fa-box-archive"></i> {t('archive')}
             </>
           )}
                 </button>
@@ -44,7 +46,7 @@ function NotesList({ notes, onDelete, onToggleArchive, isArchived }) {
                   className="note-item__detail-button"
                   onClick={() => navigate(`/notes/${note.id}`)}
                 ><i className="fa-solid fa-circle-info"></i>
-                   Detail
+                   {t('detail')}
                 </button>
               </div>
             </div>

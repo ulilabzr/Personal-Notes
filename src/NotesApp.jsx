@@ -13,6 +13,9 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AuthContext from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { LoadingProvider } from "./contexts/LoadingContext";
+import LoadingIndicator from "./components/LoadingIndicator";
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 
 function PrivateRoute({ children }) {
@@ -24,24 +27,29 @@ function PrivateRoute({ children }) {
 function NotesApp() {
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <NotesProvider>
-          <div>
-            <Navigation />
-          <Routes>
-            <Route path='/' element={<Layout />}>
-              <Route index element={<PrivateRoute><HomePage /></PrivateRoute>} />
-              <Route path='archives' element={<PrivateRoute><ArchivePage /></PrivateRoute>} />
-              <Route path='notes/:id' element={<PrivateRoute><DetailPage /></PrivateRoute>} />
-              <Route path='new' element={<PrivateRoute><AddPage /></PrivateRoute>} />
-              <Route path='login' element={<LoginPage />} />
-              <Route path='register' element={<RegisterPage />} />
-              <Route path='*' element={<NotFoundPage />} />
-            </Route>
-          </Routes>
-          </div>
-        </NotesProvider>
-      </AuthProvider>
+      <LanguageProvider>
+        <LoadingProvider>
+          <AuthProvider>
+            <NotesProvider>
+              <div>
+                <Navigation />
+                <LoadingIndicator />
+              <Routes>
+                <Route path='/' element={<Layout />}>
+                  <Route index element={<PrivateRoute><HomePage /></PrivateRoute>} />
+                  <Route path='archives' element={<PrivateRoute><ArchivePage /></PrivateRoute>} />
+                  <Route path='notes/:id' element={<PrivateRoute><DetailPage /></PrivateRoute>} />
+                  <Route path='new' element={<PrivateRoute><AddPage /></PrivateRoute>} />
+                  <Route path='login' element={<LoginPage />} />
+                  <Route path='register' element={<RegisterPage />} />
+                  <Route path='*' element={<NotFoundPage />} />
+                </Route>
+              </Routes>
+              </div>
+            </NotesProvider>
+          </AuthProvider>
+        </LoadingProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

@@ -1,9 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
+import LanguageContext from "../contexts/LanguageContext";
 
 function SearchBar({ keyword, keywordChange }) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { t } = useContext(LanguageContext);
 
   const onChange = useCallback((e) => {
     const value = e.target.value;
@@ -16,7 +18,7 @@ function SearchBar({ keyword, keywordChange }) {
       <input
         type="search"
         className="search-bar__input"
-        placeholder="Cari catatan..."
+        placeholder={t('searchPlaceholder')}
         value={keyword}
         onChange={onChange}
       />

@@ -3,9 +3,11 @@ import NotesList from "../components/NotesList";
 import NotesContext from "../contexts/NotesContext";
 import SearchBar from "../components/SearchBar";
 import { useSearchParams } from "react-router-dom";
+import LanguageContext from "../contexts/LanguageContext";
 
 function ArchivePage() {
   const { notes, onDelete, onToggleArchive, setSearchKeyword } = useContext(NotesContext);
+  const { t } = useContext(LanguageContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = (searchParams.get('q') || '').toLowerCase();
 
@@ -21,7 +23,7 @@ function ArchivePage() {
   return (
     <div className="note-app">
       <div className="note-app__header">
-        <h1>Arsip Catatan</h1>
+        <h1>{t('archive')}</h1>
       </div>
       <SearchBar keyword={query} keywordChange={(val) => {
         setSearchKeyword(val);

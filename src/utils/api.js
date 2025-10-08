@@ -1,6 +1,3 @@
-// API client for https://notes-api.dicoding.dev/v1
-// Focus on helper functions instead of raw fetch usage in components
-
 const BASE_URL = 'https://notes-api.dicoding.dev/v1';
 
 function getAccessToken() {
@@ -12,6 +9,9 @@ function putAccessToken(token) {
   else localStorage.removeItem('accessToken');
 }
 
+let loadingHooks = null;
+export function attachLoadingHooks(hooks) { loadingHooks = hooks; }
+
 async function fetchWithAuth(path, options = {}) {
   const token = getAccessToken();
   const headers = {
@@ -20,12 +20,15 @@ async function fetchWithAuth(path, options = {}) {
   };
   if (token) headers.Authorization = `Bearer ${token}`;
 
+  loadingHooks?.begin?.();
   const response = await fetch(`${BASE_URL}${path}`, { ...options, headers });
   const body = await response.json().catch(() => ({}));
   if (!response.ok || body.status !== 'success') {
     const message = body.message || 'Request failed';
+    loadingHooks?.end?.();
     throw new Error(message);
   }
+  loadingHooks?.end?.();
   return body;
 }
 

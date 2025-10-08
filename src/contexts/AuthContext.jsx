@@ -1,9 +1,14 @@
 import React, { createContext, useCallback, useEffect, useMemo, useState } from "react";
-import { getUserLogged, login as apiLogin, logout as apiLogout, register as apiRegister, getAccessToken } from "../utils/api";
+import { getUserLogged, login as apiLogin, logout as apiLogout, register as apiRegister, getAccessToken, attachLoadingHooks } from "../utils/api";
+import LoadingContext from "./LoadingContext";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+  const { begin, end } = React.useContext(LoadingContext);
+  React.useEffect(() => {
+    attachLoadingHooks({ begin, end });
+  }, [begin, end]);
   const [user, setUser] = useState(null);
   const [initializing, setInitializing] = useState(true);
 
