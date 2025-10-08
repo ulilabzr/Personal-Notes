@@ -1,13 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import NotesList from "../components/NotesList";
 import NotesContext from "../contexts/NotesContext";
 import SearchBar from "../components/SearchBar";
+import { useSearchParams } from "react-router-dom";
 
 function ArchivePage() {
-  const { notes, onDelete, onToggleArchive, searchKeyword, setSearchKeyword } = useContext(NotesContext);
+  const { notes, onDelete, onToggleArchive, setSearchKeyword } = useContext(NotesContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = (searchParams.get('q') || '').toLowerCase();
+
+  useEffect(() => {
+    setSearchKeyword(query);
+  }, [query, setSearchKeyword]);
+
   const filteredNotes = notes.filter(note =>
     note.archived &&
-    note.title.toLowerCase().includes(searchKeyword.toLowerCase())
+    note.title.toLowerCase().includes(query)
   );
 
   return (
@@ -15,7 +23,10 @@ function ArchivePage() {
       <div className="note-app__header">
         <h1>Arsip Catatan</h1>
       </div>
-      <SearchBar keyword={searchKeyword} keywordChange={setSearchKeyword} />
+      <SearchBar keyword={query} keywordChange={(val) => {
+        setSearchKeyword(val);
+        setSearchParams(val ? { q: val } : {});
+      }} />
       <NotesList
         notes={filteredNotes}
         onDelete={onDelete}

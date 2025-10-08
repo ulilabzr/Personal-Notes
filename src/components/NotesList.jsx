@@ -42,7 +42,7 @@ function NotesList({ notes, onDelete, onToggleArchive, isArchived }) {
                 {/* 🟢 Tombol Detail */}
                 <button
                   className="note-item__detail-button"
-                  onClick={() => navigate(`/detail/${note.id}`)}
+                  onClick={() => navigate(`/notes/${note.id}`)}
                 ><i className="fa-solid fa-circle-info"></i>
                    Detail
                 </button>
