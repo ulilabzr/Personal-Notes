@@ -40,8 +40,6 @@ function NotesList({ notes, onDelete, onToggleArchive, isArchived }) {
             </>
           )}
                 </button>
-
-                {/* 🟢 Tombol Detail */}
                 <button
                   className="note-item__detail-button"
                   onClick={() => navigate(`/notes/${note.id}`)}
